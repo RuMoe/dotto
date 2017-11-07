@@ -18,6 +18,9 @@ this are just basic tests, the library is also tested in `json-patch.erl <https:
 usage
 -----
 
+TODO: Due to compatibility with older erlang versions, maps where replaced
+with dicts.
+
 ::
 
     Data = #{name => "bob", age => 29, friends => ["sandy", "patrick"], data => #{numbers => [10,11,12]}}.
