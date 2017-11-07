@@ -13,7 +13,7 @@ tests
 
     make tests
 
-this are just basic tests, the library is also tested in `json-patch.erl <https://github.com/marianoguerra/json-patch.erl>`_
+this are just basic, hardcoded tests
 
 usage
 -----
