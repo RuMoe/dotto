@@ -139,10 +139,6 @@ fetch(Obj, Path, Default) ->
 % private api
 
 
-% TODO: make this an option
-add_(Obj, Field, Value) when is_map(Obj) andalso is_integer(Field) ->
-    {ok, maps:put(integer_to_binary(Field), Value, Obj)};
-
 add_(Obj, Field, Value) when is_map(Obj) ->
     {ok, maps:put(Field, Value, Obj)};
 
