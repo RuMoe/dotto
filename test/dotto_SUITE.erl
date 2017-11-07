@@ -1,7 +1,6 @@
 -module(dotto_SUITE).
 -compile(export_all).
 
--define(NEW, dict:new()).
 -define(EMPTY, dict:new()).
 -define(DICT(X), dict:from_list(X)).
 -define(DICT(X,Y), ?DICT([{X,Y}])).
