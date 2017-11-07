@@ -6,6 +6,9 @@ patcho dotto...
 a data driven data structure manipulation library for erlang, a superset of
 `json patch <http://tools.ietf.org/html/rfc6902>`_
 
+The primary change of this fork is the replacement of maps with
+dicts to support older erlang versions.
+
 tests
 -----
 
