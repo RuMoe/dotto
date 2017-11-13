@@ -54,6 +54,11 @@ add(Obj, [Field|Fields], Val) ->
         Other -> Other
     end.
 
+% calling remove with an empty path (i.e the documents root) removes all
+% elements. This is equivalent to a new, empty object
+remove(Obj, []) ->
+    {ok, dict:new()};
+
 remove(Obj, [Field]) ->
     case get_(Obj, Field) of
         {ok, _FieldObj} ->
