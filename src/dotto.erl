@@ -36,9 +36,14 @@ do_apply([Op|Ops], Obj, Errors) ->
         {error, Error} -> do_apply(Ops, Obj, [Error|Errors])
     end.
 
-% this will only match if you try to replace the whole document with an empty path
-add(_Obj, [], Val) ->
+% This will only match if you try to replace the whole document with an empty path
+% When strictly following the RFC, Val is allowed to be anything. However,
+% if it is not a valid JSON than the result is not a JSON as well which we want
+% to prevent in our use case.
+add(_Obj, [], Val) when ?IS_DICT(Val)->
     {ok, Val};
+add(Obj, [], Val) ->
+    {error, {cantset, Obj, [], Val}};
 add(Obj, [Field], Val) ->
     add_(Obj, Field, Val);
 
@@ -79,8 +84,11 @@ remove(Obj, [Field|Fields]) ->
     end.
 
 % this will only match if you try to replace the whole document with an empty path
-replace(_Obj, [], Val) ->
+% However, this is only allowed if the resulting document is a valid JSON as well
+replace(_Obj, [], Val) when ?IS_DICT(Val)->
     {ok, Val};
+replace(Obj, [], Val) ->
+    {error, {cantset, Obj, [], Val}};
 replace(Obj, [Field], Val) ->
     case get_(Obj, Field) of
         {ok, _FieldObj} ->
