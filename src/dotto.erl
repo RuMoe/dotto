@@ -155,7 +155,8 @@ add_(Obj, Field, Value) when ?IS_DICT(Obj) ->
 add_(Obj, <<"-">>, Value) when is_list(Obj) ->
     {ok, Obj ++ [Value]};
 
-add_(Obj, Field, Value) when is_list(Obj) andalso is_integer(Field) ->
+add_(Obj, Field, Value) when is_list(Obj) andalso is_integer(Field) andalso
+                             length(Obj) >= Field andalso Field >= 0->
     {L1, L2} = lists:split(Field, Obj),
     {ok, L1 ++ [Value|L2]};
 
@@ -165,7 +166,8 @@ add_(Obj, Field, Value) ->
 set_(Obj, Field, Value) when ?IS_DICT(Obj) ->
     {ok, set_element(Obj, Field, Value)};
 
-set_(Obj, Field, Value) when is_list(Obj) andalso is_integer(Field) ->
+set_(Obj, Field, Value) when is_list(Obj) andalso is_integer(Field)
+                             andalso length(Obj) >= Field andalso Field >= 0->
     Result = case lists:split(Field, Obj) of
                  {[], [_|T]} -> [Value] ++ T;
                  {H1, [_|T]} -> H1 ++ [Value] ++ T;
@@ -185,7 +187,8 @@ del_(Obj, Field) when ?IS_DICT(Obj) ->
 del_(Obj, <<"-">>) when is_list(Obj) ->
     {ok, lists:droplast(Obj)};
 
-del_(Obj, Field) when is_list(Obj) andalso is_integer(Field) ->
+del_(Obj, Field) when is_list(Obj) andalso is_integer(Field)
+                      andalso length(Obj) >= Field andalso Field >= 0->
     Result = case lists:split(Field, Obj) of
                  {[], [_|T]} -> T;
                  {H1, [_|T]} -> H1 ++ T;
